@@ -1,4 +1,7 @@
+import { rejects } from "assert";
+import { AppError } from "../../../../shared/errors/AppError";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository";
+import { CreateUserError } from "./CreateUserError";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
 let createUserUseCase: CreateUserUseCase;
@@ -29,5 +32,16 @@ describe("Create User", () => {
     expect(createdUser?.name).toBe(user.name);
   });
 
-  it("Should not be able to create a new user with an existing email", async () => {});
+  it("Should not be able to create a new user with an existing email", async () => {
+    const user = {
+      "name": "username",
+      "email": "username@test.com",
+      "password": "password"
+    }
+
+    expect(async () => {
+      await createUserUseCase.execute(user);
+      await createUserUseCase.execute(user);
+    }).rejects.toBeInstanceOf(AppError);
+  });
 });
