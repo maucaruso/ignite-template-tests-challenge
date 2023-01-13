@@ -27,7 +27,6 @@ describe("Show User Profile", () => {
 
     if (createdUser?.id) {
       const response = await showUserProfileUseCase.execute(createdUser.id);
-      console.log(response);
       expect(response.id).toBe(createdUser.id);
     }
   });
