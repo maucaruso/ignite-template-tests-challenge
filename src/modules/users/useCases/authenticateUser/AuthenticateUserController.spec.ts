@@ -8,11 +8,17 @@ let connection: Connection;
 describe("Authenticate User Controller", () => {
   beforeAll(async() => {
     connection = await createConnection();
+  });
+
+  beforeEach(async() => {
     await connection.runMigrations();
   });
 
-  afterAll(async () => {
+  afterEach(async() => {
     await connection.dropDatabase();
+  });
+
+  afterAll(async () => {
     await connection.close();
   });
 
